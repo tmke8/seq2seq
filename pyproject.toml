@@ -1,0 +1,51 @@
+[project]
+name = "transformer-example"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Thomas M Kehrenberg", email = "tmke8@posteo.net" }
+]
+dependencies = [
+    "torch",
+    "torchtext",
+    "torchdata",
+    "spacy",
+    "portalocker",
+    "hydra-core~=1.3.2",
+]
+readme = "README.md"
+requires-python = ">= 3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "ruff",
+    "pip~=24.0",
+]
+
+[[tool.rye.sources]]
+name = "torch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+type = "index"
+
+[tool.pyright]
+typeCheckingMode = "strict"
+venvPath = "."
+venv = ".venv"
+reportUnknownVariableType = "none"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "W", "I"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/transformer_example"]
