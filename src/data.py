@@ -126,7 +126,8 @@ def get_data(
 
 # A small test to make sure our data loasd in correctly
 if __name__ == "__main__":
-    opts = Options(src=Language.en, tgt=Language.de, batch=128)
+    from src.config import TrainingConfig
+    opts = Options(TrainingConfig(), src=Language.en, tgt=Language.de, batch=128)
 
     (
         train_dl,
@@ -140,3 +141,7 @@ if __name__ == "__main__":
 
     print(f"{opts.src} vocab size: {len(src_vocab)}")
     print(f"{opts.src} vocab size: {len(tgt_vocab)}")
+    src_tensor, tgt_tensor = next(iter(train_dl))
+    src = " ".join(src_vocab.lookup_tokens(src_tensor.squeeze()[:, 0].tolist()))
+    tgt = " ".join(tgt_vocab.lookup_tokens(tgt_tensor.squeeze()[:, 0].tolist()))
+    print(f"first training sample: {src}, {tgt}")
