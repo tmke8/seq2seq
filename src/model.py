@@ -19,7 +19,7 @@ class PositionalEncoding(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.register_buffer("pos_embedding", pos_embedding)
 
-    def forward(self, token_embedding: Tensor):
+    def forward(self, token_embedding: Tensor) -> Tensor:
         return self.dropout(token_embedding + self.pos_embedding[: token_embedding.size(0), :])
 
 
@@ -65,7 +65,7 @@ class Translator(nn.Module):
 
         self._init_weights()
 
-    def _init_weights(self):
+    def _init_weights(self) -> None:
         for p in self.parameters():
             if p.dim() > 1:
                 nn.init.xavier_uniform_(p)
@@ -79,7 +79,7 @@ class Translator(nn.Module):
         src_padding_mask: Tensor,
         tgt_padding_mask: Tensor,
         memory_key_padding_mask: Tensor,
-    ):
+    ) -> Tensor:
         src_emb = self.pos_enc(self.src_embedding(src))
         tgt_emb = self.pos_enc(self.tgt_embedding(trg))
 
